@@ -8,6 +8,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 import json
 
+from utils import load_data
+
 ################### Load config.json and get path variables ##################
 with open('config.json','r') as f:
     config = json.load(f) 
@@ -16,10 +18,10 @@ dataset_csv_path = os.path.join(config['output_folder_path'], 'finaldata.csv')
 model_path = os.path.join(config['output_model_path'], 'trainedmodel.pkl') 
 
 ####################### Load and prepare data ################################
-
-df = pd.read_csv(dataset_csv_path, index_col='corporation')
-y = df['exited'].values.reshape(-1,1).ravel()
-X = df.drop(columns='exited').values.reshape(-1,3)
+X, y = load_data(data_path = dataset_csv_path)
+# df = pd.read_csv(dataset_csv_path, index_col='corporation')
+# y = df['exited'].values.reshape(-1,1).ravel()
+# X = df.drop(columns='exited').values.reshape(-1,3)
 X_train, X_val, y_train, y_val = train_test_split(
     X, 
     y, 
