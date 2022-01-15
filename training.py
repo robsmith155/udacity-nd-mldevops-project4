@@ -19,9 +19,6 @@ model_path = os.path.join(config['output_model_path'], 'trainedmodel.pkl')
 
 ####################### Load and prepare data ################################
 X, y = load_data(data_path = dataset_csv_path)
-# df = pd.read_csv(dataset_csv_path, index_col='corporation')
-# y = df['exited'].values.reshape(-1,1).ravel()
-# X = df.drop(columns='exited').values.reshape(-1,3)
 X_train, X_val, y_train, y_val = train_test_split(
     X, 
     y, 
