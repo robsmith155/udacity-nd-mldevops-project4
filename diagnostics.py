@@ -51,12 +51,34 @@ def dataframe_summary(data_path: str) -> dict:
     summary_dict : dict
         Dictionary of the dataset summary statistics.
     """
-    df = pd.read_csv(dataset_csv_path, index_col='corporation')
+    df = pd.read_csv(data_path, index_col='corporation')
     summary_dict = {}
     summary_dict['col_means'] = dict(df.mean())
     summary_dict['col_medians'] = dict(df.median())
     summary_dict['col_std'] = dict(df.std())
     return summary_dict
+
+
+#################### Function to check missing data ###################
+
+def missing_data(data_path) -> list:
+    """
+    Function to count missing values in each column. Output in percent.
+
+    Inputs
+    ------
+    data_path : str
+        Filepath of dataset to count missing data.
+    Returns
+    -------
+    col_na_pc : list
+        List of column missing values in percent.
+    """
+    df = pd.read_csv(data_path, index_col='corporation')
+    col_na_count = list(df.isna().sum())
+    col_na_pc = [col_na_count[i]/len(df) for i in range(len(col_na_count))]
+    return col_na_pc
+
 
 ##################Function to get timings
 #def execution_time():
@@ -69,8 +91,9 @@ def dataframe_summary(data_path: str) -> dict:
 
 
 if __name__ == '__main__':
-    model_predictions(data_path = test_data_path)
-    dataframe_summary(data_path = dataset_csv_path)
+    model_predictions(data_path=test_data_path)
+    dataframe_summary(data_path=dataset_csv_path)
+    missing_data(data_path=dataset_csv_path)
     #execution_time()
     #outdated_packages_list()
 
