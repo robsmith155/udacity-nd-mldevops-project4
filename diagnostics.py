@@ -4,6 +4,7 @@ import timeit
 import os
 import json
 import pickle
+import subprocess
 
 from utils import load_data
 
@@ -36,6 +37,7 @@ def model_predictions(data_path: str) -> list:
 
     y_pred = model.predict(X)
     return y_pred.tolist()
+
 
 ##################Function to get summary statistics
 def dataframe_summary(data_path: str) -> dict:
@@ -82,7 +84,7 @@ def missing_data(data_path) -> list:
 
 ###################### Function to get timings ##############################
 
-def execution_time():
+def execution_time() -> list:
     """
     Function to compute the time to run the ingestion.py and training.py 
     scripts.
@@ -111,9 +113,29 @@ def execution_time():
 
     return runtimes
 
-##################Function to check dependencies
-#def outdated_packages_list():
-    #get a list of 
+
+###################### Function to check dependencies #######################
+
+def outdated_packages_list() -> list:
+    """
+    Compare installed Python packages and output list of packages which are 
+    not using the latest version. This is a list of dictionaries which includes
+    the package name, currently installed version and the latest availavle
+    version.
+
+    Inputs
+    ------
+    None
+
+    Returns
+    -------
+    runtimes : list
+        List of runtimes for ingestion and training (in seconds).
+    """
+    outdated = subprocess.run(['pip', 'list', '--outdated', '--format', 'json'], capture_output=True).stdout
+    outdated = outdated.decode('utf8').replace("'", '"')
+    outdated_list = json.loads(outdated)
+    return outdated_list
 
 
 if __name__ == '__main__':
@@ -121,7 +143,7 @@ if __name__ == '__main__':
     dataframe_summary(data_path=dataset_csv_path)
     missing_data(data_path=dataset_csv_path)
     execution_time()
-    #outdated_packages_list()
+    outdated_packages_list()
 
 
 
