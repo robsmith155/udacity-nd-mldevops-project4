@@ -80,10 +80,36 @@ def missing_data(data_path) -> list:
     return col_na_pc
 
 
-##################Function to get timings
-#def execution_time():
-    #calculate timing of training.py and ingestion.py
-    #return #return a list of 2 timing values in seconds
+###################### Function to get timings ##############################
+
+def execution_time():
+    """
+    Function to compute the time to run the ingestion.py and training.py 
+    scripts.
+
+    Inputs
+    ------
+    None
+
+    Returns
+    -------
+    runtimes : list
+        List of runtimes for ingestion and training (in seconds).
+    """
+
+    # Time the ingestion.py script
+    starttime = timeit.default_timer()
+    os.system('python3 ingestion.py')
+    ingestion_runtime = timeit.default_timer() - starttime
+    
+    # Time the training.py script
+    starttime = timeit.default_timer()
+    os.system('python3 training.py')
+    training_runtime = timeit.default_timer() - starttime
+    
+    runtimes = [ingestion_runtime, training_runtime]
+
+    return runtimes
 
 ##################Function to check dependencies
 #def outdated_packages_list():
@@ -94,7 +120,7 @@ if __name__ == '__main__':
     model_predictions(data_path=test_data_path)
     dataframe_summary(data_path=dataset_csv_path)
     missing_data(data_path=dataset_csv_path)
-    #execution_time()
+    execution_time()
     #outdated_packages_list()
 
 
