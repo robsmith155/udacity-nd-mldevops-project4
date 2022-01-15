@@ -30,6 +30,8 @@ def score_model():
     
     with open(score_path, 'w') as f:
         f.write(str(score))
+    
+    return score
 
 
 if __name__ == '__main__':
