@@ -32,7 +32,8 @@ def score():
     """
     Endpoint to check the score of the current model on the test dataset
     """
-    score = score_model()
+    data_path = request.args.get('datapath')
+    score = score_model(data_path)
     return str(score)
 
 ####################### Summary Statistics Endpoint #########################

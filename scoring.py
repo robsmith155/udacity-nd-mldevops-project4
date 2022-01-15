@@ -14,13 +14,13 @@ model_path = os.path.join(config['output_model_path'], 'trainedmodel.pkl')
 score_path = os.path.join(config['output_model_path'], 'latestscore.txt')
 
 ################# Function for model scoring ################################
-def score_model():
+def score_model(data_path: str):
     """
     Function to score the trained model using the F1 metric on teh test
     dataset. Score is output to a file named 'latestscore.txt' in the 
     trained model folder.
     """
-    X, y = load_data(data_path=test_data_path)
+    X, y = load_data(data_path)
 
     with open(model_path, 'rb') as f:
         model = pickle.load(f)
@@ -35,4 +35,4 @@ def score_model():
 
 
 if __name__ == '__main__':
-    score_model()
+    score_model(test_data_path)

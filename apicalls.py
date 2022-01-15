@@ -14,7 +14,7 @@ URL = "http://127.0.0.1:8000"
 
 #Call each API endpoint and store the responses
 response1 = requests.post(f'{URL}/prediction?datapath=testdata/testdata.csv').content
-response2 = requests.get(f'{URL}/scoring').content
+response2 = requests.get(f'{URL}/scoring?datapath=testdata/testdata.csv').content
 response3 = requests.get(f'{URL}/summarystats?datapath=testdata/testdata.csv').content
 response4 = requests.get(f'{URL}/diagnostics?datapath=testdata/testdata.csv').content
 
